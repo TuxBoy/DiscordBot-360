@@ -1,0 +1,3 @@
+module.exports = {
+  token: "discord_token_here"
+}
