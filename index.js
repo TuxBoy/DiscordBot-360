@@ -1,19 +1,35 @@
-const Discord = require('discord.js')
-const config  = require('./config')
-const Message = require('./Class/Message')
+const path     = require('path')
+const config   = require('./config')
+const settings = require(__dirname + '/settings')
+const Message  = require('./Class/Message')
+const Commando = require('discord.js-commando')
 
-const bot     = new Discord.Client()
+const bot     = new Commando.Client()
 
-bot.on('message', (guild, message) => {
-  if (message.content === '!test') {
-    message.reply('test ok')
+bot.registry.registerGroup('projet', 'Project')
+
+bot.registry.registerCommandsIn(__dirname + '/commands')
+bot.registry.registerDefaults()
+
+bot.on('ready', () => {
+  console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guild`)
+  bot.user.setGame(settings.game)
+})
+
+bot.on('message', message => {
+  if (message.author.id === bot.user.id) {
+    return;
   }
-  if (/Antho/i.test(message.content) || /tribu/.test(message.content)) {
-    message.reply("Tu veux peut être en savoir plus : #petit-topo")
+  if (Message.isQuestion(message)) {
+    message.reply(" :cop: Tu peux poser ta question directement pour avoir une chance que l'on t'aide :)")
+  }
+  if (Message.isMentionOnlyMember(message)) {
+    message.reply(`:cop: Tu ne peux pas mentioner un membre sans message`)
+  }
+  if (Message.isFullUpperCase(message)) {
+    message.reply(`:cop: Pas la peine de s'énerver`)
   }
 
-  Message.isQuestion(message)
-  Message.
 })
 
 bot.on('guildMemberAdd', member => {

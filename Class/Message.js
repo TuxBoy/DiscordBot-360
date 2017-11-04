@@ -6,15 +6,33 @@ module.exports = class Message
    * @param message
    */
   static isQuestion (message) {
-    if (message.content.substr(-1) === '?') {
-      message.reply(" :cop: Tu peux poser ta question directement pour avoir une chance que l'on t'aide :)")
-    }
+    let content = message.content
+    return content.substr(-1) === '?' && (/quelqu/gi.test(content) || /connait/i.test(content))
   }
 
-  static formatChangeLogMessage(guild, message) {
+  static badFormatChangeLogMessage (message) {
     // Il faut que je vérifie que le message soit bien taper depuis le channel guild
     // Je vérifie le format du message
+  }
 
+  /**
+   * True if the string contains only one mention.
+   * @param member
+   * @returns {boolean|*|Collection.<Snowflake, GuildMember>|Collection<Snowflake, GuildMember>|string|?Collection.<Snowflake, GuildMember>}
+   */
+  static isMentionOnlyMember (message) {
+    let arrayString = message.content.split(' ')
+    let memberId
+    arrayString.forEach(item => {
+      if (/<@\d+>/.test(item)) {
+        memberId = item
+      }
+    })
+    return arrayString.length == 1 && memberId && message.mentions.members;
+  }
+
+  static isFullUpperCase (message) {
+    return message.content === message.content.toUpperCase();
   }
 
 }

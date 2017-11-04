@@ -18,5 +18,5 @@ Renommer le config.js.dist en config.js et ajouter le token du bot
 Démarrer le serveur node
 
 ```bash
-$ node index.js
+$ node index.js --harmony
 ```
