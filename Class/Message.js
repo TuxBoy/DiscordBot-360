@@ -1,3 +1,5 @@
+const string = require('string')
+
 module.exports = class Message
 {
 
@@ -32,7 +34,7 @@ module.exports = class Message
   }
 
   static isFullUpperCase (message) {
-    return message.content === message.content.toUpperCase();
+    return (message.content === message.content.toUpperCase() && message.content.length >= 4);
   }
 
 }

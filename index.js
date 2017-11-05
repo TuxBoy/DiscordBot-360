@@ -7,6 +7,7 @@ const Commando = require('discord.js-commando')
 const bot     = new Commando.Client()
 
 bot.registry.registerGroup('projet', 'Project')
+bot.registry.registerGroup('rules', 'Rules')
 
 bot.registry.registerCommandsIn(__dirname + '/commands')
 bot.registry.registerDefaults()
@@ -14,6 +15,7 @@ bot.registry.registerDefaults()
 bot.on('ready', () => {
   console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guild`)
   bot.user.setGame(settings.game)
+  bot.user.setUsername(settings.username)
 })
 
 bot.on('message', message => {
