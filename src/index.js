@@ -26,7 +26,7 @@ bot.on('message', message => {
   if (message.author.id === bot.user.id) {
     return;
   }
-  if (Message.isQuestion(message)) {
+  if (Message.isQuestion(message.content)) {
     message.reply(" :cop: Tu peux poser ta question directement pour avoir une chance que l'on t'aide :)")
   }
   if (Message.isMentionOnlyMember(message)) {

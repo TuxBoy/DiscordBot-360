@@ -5,11 +5,10 @@ module.exports = class Message
 
   /**
    *
-   * @param message
+   * @param message string
    */
-  static isQuestion (message) {
-    let content = message.content
-    let regex   = /^(bonjour |salut )?([^ ]+ ){0,3}(qui s'y conna(î|i)(t|s)|des gens|quelqu'un|qqun|des personnes)[^\?]+\?$/i 
+  static isQuestion (content) {
+    let regex = /^(bonjour |salut )?([^ ]+ ){0,3}(qui s'y conna(î|i)(t|s)|des gens|quelqu'un|qqun|des personnes)[^\?]+\?$/i 
     return regex.test(content)
   }
 
@@ -27,11 +26,14 @@ module.exports = class Message
     let arrayString = message.content.split(' ')
     let memberId
     arrayString.forEach(item => {
-      if (/<@\d+>/.test(item)) {
+      if (/<@\d+>/i.test(item)) {
+      console.log('azeazzau', memberId)
+    
         memberId = item
       }
     })
-    return arrayString.length == 1 && memberId && message.mentions.members;
+    
+    return arrayString.length == 1 && memberId;
   }
 
   static isFullUpperCase (message) {
