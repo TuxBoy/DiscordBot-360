@@ -1,4 +1,4 @@
-const string = require('string')
+const S = require('string')
 
 module.exports = class Message
 {
@@ -9,7 +9,8 @@ module.exports = class Message
    */
   static isQuestion (message) {
     let content = message.content
-    return content.substr(-1) === '?' && (/quelqu/gi.test(content) || /connait/i.test(content))
+    let regex   = /^(bonjour |salut )?([^ ]+ ){0,3}(qui s'y conna(î|i)(t|s)|des gens|quelqu'un|qqun|des personnes)[^\?]+\?$/i 
+    return regex.test(content)
   }
 
   static badFormatChangeLogMessage (message) {
@@ -34,7 +35,12 @@ module.exports = class Message
   }
 
   static isFullUpperCase (message) {
-    return (message.content === message.content.toUpperCase() && message.content.length >= 4);
+    return (
+      message.content === message.content.toUpperCase() 
+      && !S(message.content).isNumeric()
+      && S(message.content).length >= 4
+      && !this.isMentionOnlyMember(message)
+    );
   }
 
 }

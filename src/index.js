@@ -1,5 +1,5 @@
 const path     = require('path')
-const config   = require('./config')
+const config   = require('../config')
 const settings = require(__dirname + '/settings')
 const Message  = require('./Class/Message')
 const Commando = require('discord.js-commando')
@@ -14,7 +14,11 @@ bot.registry.registerDefaults()
 
 bot.on('ready', () => {
   console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guild`)
-  bot.user.setGame(settings.game)
+  if (config.dev) {
+    bot.user.setGame('En cours de dev')    
+  } else {
+    bot.user.setGame(settings.game)
+  }
   bot.user.setUsername(settings.username)
 })
 
