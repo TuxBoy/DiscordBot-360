@@ -37,10 +37,12 @@ module.exports = class Message
   }
 
   static isFullUpperCase (message) {
+    const content = message.content
     return (
-      message.content === message.content.toUpperCase() 
-      && !S(message.content).isNumeric()
-      && S(message.content).length >= 4
+      content === content.toUpperCase() 
+      && !S(content).isNumeric()
+      && S(content).length >= 15
+      && /[A-Z]{4,}/.test(content)
       && !this.isMentionOnlyMember(message)
     );
   }
